@@ -1,9 +1,7 @@
 services:
   - type: web
     name: webshop
-    env: java
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -Dspring.profiles.active=render -jar target/webshop-0.0.1-SNAPSHOT.war
+    env: docker
     envVars:
       - key: JWT_SECRET
         sync: false
