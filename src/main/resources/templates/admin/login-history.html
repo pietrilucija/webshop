@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 admin-sidebar d-none d-md-block">
+            <p class="text-muted small fw-bold mt-2 mb-3 text-uppercase" style="letter-spacing:.05em;">Navigacija</p>
+            <a th:href="@{/admin}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            <a th:href="@{/admin/categories}"><i class="bi bi-tags me-2"></i> Kategorije</a>
+            <a th:href="@{/admin/products}"><i class="bi bi-box me-2"></i> Proizvodi</a>
+            <a th:href="@{/admin/orders}"><i class="bi bi-receipt me-2"></i> Narudžbe</a>
+            <a th:href="@{/admin/login-history}" class="active"><i class="bi bi-clock-history me-2"></i> Login povijest</a>
+        </div>
+
+        <div class="col-md-10 py-4 px-4">
+            <h2 class="section-title mb-4">Login povijest</h2>
+
+            <div class="card auth-card p-0 overflow-hidden">
+                <table class="table mb-0">
+                    <thead>
+                        <tr style="background: var(--rose-light);">
+                            <th class="ps-3 py-3">Korisnik</th>
+                            <th>IP adresa</th>
+                            <th>User-Agent</th>
+                            <th>Vrijeme</th>
+                            <th class="pe-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="log : ${loginHistory.content}">
+                            <td class="ps-3 fw-semibold" th:text="${log.user.email}">email</td>
+                            <td>
+                                <code class="small" th:text="${log.ipAddress}">127.0.0.1</code>
+                            </td>
+                            <td class="small text-muted"
+                                style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                                th:text="${log.userAgent != null ? log.userAgent : '-'}">-</td>
+                            <td class="small"
+                                th:text="${#temporals.format(log.loginAt, 'dd.MM.yyyy. HH:mm:ss')}">
+                            </td>
+                            <td class="pe-3">
+                                <span th:if="${log.success}"
+                                      class="order-status-badge status-paid">
+                                    <i class="bi bi-check-lg me-1"></i> Uspješno
+                                </span>
+                                <span th:unless="${log.success}"
+                                      class="order-status-badge status-cancelled">
+                                    <i class="bi bi-x-lg me-1"></i> Neuspješno
+                                </span>
+                            </td>
+                        </tr>
+                        <tr th:if="${loginHistory.content.isEmpty()}">
+                            <td colspan="5" class="text-center py-4 text-muted">Nema zabilježenih prijava.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginacija -->
+            <nav th:if="${loginHistory.totalPages > 1}" class="mt-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${loginHistory.first} ? 'disabled'">
+                        <a class="page-link" th:href="@{/admin/login-history(page=${loginHistory.number - 1})}">‹</a>
+                    </li>
+                    <li class="page-item"
+                        th:each="i : ${#numbers.sequence(0, loginHistory.totalPages - 1)}"
+                        th:classappend="${i == loginHistory.number} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/admin/login-history(page=${i})}"
+                           th:text="${i + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${loginHistory.last} ? 'disabled'">
+                        <a class="page-link" th:href="@{/admin/login-history(page=${loginHistory.number + 1})}">›</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

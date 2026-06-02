@@ -1,0 +1,376 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Quicksand:wght@300;400;500;600&display=swap');
+
+:root {
+    --pink: #d4849f;
+    --pink-light: #f2d0de;
+    --pink-dark: #b76e79;
+    --nude: #f5e6d3;
+    --nude-light: #fdf8f5;
+    --gold: #c9a96e;
+    --text-dark: #4a3728;
+    --text-muted: #8c7b6e;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--nude-light);
+    color: var(--text-dark);
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-dark);
+}
+
+
+.navbar-blush {
+    background-color: var(--white);
+    border-bottom: 2px solid var(--pink-light);
+    padding: 12px 0;
+}
+
+.navbar-blush .navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--pink-dark) !important;
+    font-weight: 700;
+}
+
+.navbar-blush .nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+    margin: 0 8px;
+    font-size: 0.95rem;
+}
+
+.navbar-blush .nav-link:hover {
+    color: var(--pink) !important;
+}
+
+/* Gumbi */
+.btn-blush {
+    background-color: var(--pink);
+    border: none;
+    color: white;
+    border-radius: 25px;
+    padding: 8px 24px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-blush:hover {
+    background-color: var(--pink-dark);
+    color: white;
+}
+
+.btn-blush-outline {
+    background-color: transparent;
+    border: 2px solid var(--pink);
+    color: var(--pink);
+    border-radius: 25px;
+    padding: 6px 22px;
+    font-weight: 500;
+}
+
+.btn-blush-outline:hover {
+    background-color: var(--pink);
+    color: white;
+}
+
+/* Kartice proizvoda */
+.product-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    background: var(--white);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.product-card .card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+.product-card .card-body {
+    padding: 16px;
+}
+
+.product-card .price {
+    color: var(--pink-dark);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Kategorije */
+.category-card {
+    background: var(--white);
+    border: 2px solid var(--pink-light);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text-dark);
+}
+
+.category-card:hover {
+    border-color: var(--pink);
+    background: var(--pink-light);
+    color: var(--text-dark);
+}
+
+
+.hero-section {
+    background: linear-gradient(135deg, var(--pink-light) 0%, var(--nude) 100%);
+    border-radius: 16px;
+    padding: 50px 40px;
+    margin-bottom: 40px;
+}
+
+.hero-section h1 {
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+}
+
+.hero-section p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+
+.auth-card {
+    background: var(--white);
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.auth-card .form-control {
+    border: 1px solid var(--pink-light);
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+.auth-card .form-control:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(212, 132, 159, 0.15);
+}
+
+.cart-table th {
+    background-color: var(--pink-light);
+    color: var(--text-dark);
+    font-weight: 600;
+    border: none;
+}
+
+.cart-table td {
+    vertical-align: middle;
+}
+
+.admin-sidebar {
+    background: var(--white);
+    border-right: 2px solid var(--pink-light);
+    min-height: calc(100vh - 76px);
+    padding: 20px;
+}
+
+.admin-sidebar a {
+    display: block;
+    padding: 10px 14px;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.admin-sidebar a:hover,
+.admin-sidebar a.active {
+    background-color: var(--pink-light);
+    color: var(--pink-dark);
+}
+
+.badge-blush {
+    background-color: var(--pink);
+    color: white;
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+}
+
+.footer-blush {
+    background-color: var(--white);
+    border-top: 2px solid var(--pink-light);
+    color: var(--text-muted);
+    padding: 20px 0;
+}
+
+.alert-blush {
+    background-color: var(--pink-light);
+    border: 1px solid var(--pink);
+    color: var(--text-dark);
+    border-radius: 10px;
+}
+
+.page-link {
+    color: var(--pink-dark);
+}
+
+.page-item.active .page-link {
+    background-color: var(--pink);
+    border-color: var(--pink);
+}
+
+.text-pink {
+    color: var(--pink-dark);
+}
+
+.bg-nude {
+    background-color: var(--nude-light);
+}
+
+.divider {
+    border-top: 2px solid var(--pink-light);
+    margin: 30px 0;
+}
+
+.qty-input {
+    width: 70px;
+    text-align: center;
+    border: 1px solid var(--pink-light);
+    border-radius: 8px;
+}
+
+.text-danger {
+    color: #c0392b !important;
+    font-size: 0.85rem;
+}
+
+.form-control.is-invalid {
+    border-color: #c0392b;
+}
+
+/* Cart badge */
+.cart-badge {
+    position: absolute;
+    top: 2px;
+    right: -2px;
+    background-color: var(--pink-dark);
+    color: white;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+/* Admin stat cards */
+.stat-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid var(--nude);
+    transition: box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+}
+
+.stat-card-pink {
+    border-left-color: var(--pink);
+}
+
+.stat-icon {
+    font-size: 1.4rem;
+    color: var(--pink);
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Quick action cards (admin dashboard) */
+.quick-action-card {
+    background: var(--white);
+    border: 2px solid var(--pink-light);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: var(--text-dark);
+    transition: all 0.2s;
+}
+
+.quick-action-card:hover {
+    border-color: var(--pink);
+    background: var(--pink-light);
+    color: var(--pink-dark);
+    transform: translateY(-2px);
+}
+
+/* Order status badges */
+.order-status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-paid {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-shipped {
+    background-color: #cfe2ff;
+    color: #084298;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* Footer links hover */
+.footer-link:hover {
+    color: var(--pink) !important;
+}
+
+/* Navbar user email - skraćivanje dugih emaila */
+.navbar .nav-link.small {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

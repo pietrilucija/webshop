@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container py-4">
+
+    <a th:href="@{/products}" class="btn btn-blush-outline btn-sm mb-4">
+        <i class="bi bi-arrow-left me-1"></i> Natrag na proizvode
+    </a>
+
+    <div class="row g-4">
+        <!-- Slika -->
+        <div class="col-md-5">
+            <div class="product-detail-img-wrap">
+                <img th:src="${product.imageUrl != null ? product.imageUrl :
+                              'https://placehold.co/600x600/fce8ef/e8698a'}"
+                     class="img-fluid w-100" style="border-radius: var(--radius);" alt="">
+            </div>
+        </div>
+
+        <!-- Detalji -->
+        <div class="col-md-7">
+            <span class="product-category-tag fs-6" th:text="${product.categoryName}"></span>
+            <h1 class="mt-1 mb-2" th:text="${product.name}">Naziv</h1>
+            <p class="price fs-3 mb-3"
+               th:text="${#numbers.formatDecimal(product.price, 1, 2)} + ' €'">0 €</p>
+
+            <div class="divider"></div>
+
+            <p class="mb-3" style="line-height: 1.8;" th:text="${product.description}">Opis</p>
+
+            <!-- Zaliha -->
+            <p class="small mb-4">
+                <i class="bi bi-box-seam me-1" style="color: var(--rose);"></i>
+                Na zalihi:
+                <strong th:text="${product.stock}">0</strong> kom
+            </p>
+
+            <!-- Dodaj u košaricu -->
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" name="productId" th:value="${product.id}">
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <div>
+                        <label class="form-label small fw-semibold mb-1">Količina</label>
+                        <input type="number" name="quantity" value="1" min="1"
+                               th:max="${product.stock}"
+                               class="form-control qty-input">
+                    </div>
+                    <div class="align-self-end">
+                        <button type="submit" class="btn btn-blush btn-lg"
+                                th:disabled="${product.stock == 0}">
+                            <i class="bi bi-bag-plus me-2"></i>
+                            <span th:text="${product.stock > 0} ? 'Dodaj u košaricu' : 'Nije dostupno'">
+                                Dodaj
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Info -->
+            <div class="d-flex gap-4 mt-4 flex-wrap">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                    <i class="bi bi-truck" style="color: var(--rose);"></i>
+                    Besplatna dostava iznad 40 €
+                </div>
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                    <i class="bi bi-arrow-return-left" style="color: var(--rose);"></i>
+                    Povrat unutar 14 dana
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

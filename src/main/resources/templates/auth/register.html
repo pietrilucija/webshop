@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body style="background: linear-gradient(135deg, var(--rose-light) 0%, var(--nude) 100%); min-height: 100vh;">
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-sm-10">
+            <div class="text-center mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:64px;height:64px;background:white;border-radius:50%;box-shadow:var(--shadow-sm);">
+                    <i class="bi bi-person-plus-fill fs-4" style="color: var(--rose);"></i>
+                </div>
+                <h2 class="mb-1">Kreiraj račun</h2>
+                <p class="text-muted small">Pridruži se Blush &amp; Glow zajednici</p>
+            </div>
+
+            <div class="card auth-card">
+                <div class="card-body p-4">
+                    <form th:action="@{/auth/register}" method="post"
+                          th:object="${registerRequest}">
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <label class="form-label">Ime</label>
+                                <input type="text" th:field="*{firstName}"
+                                       class="form-control" placeholder="Ana">
+                                <p th:if="${#fields.hasErrors('firstName')}"
+                                   th:errors="*{firstName}"
+                                   class="text-danger small mt-1"></p>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Prezime</label>
+                                <input type="text" th:field="*{lastName}"
+                                       class="form-control" placeholder="Horvat">
+                                <p th:if="${#fields.hasErrors('lastName')}"
+                                   th:errors="*{lastName}"
+                                   class="text-danger small mt-1"></p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email adresa</label>
+                            <input type="email" th:field="*{email}"
+                                   class="form-control" placeholder="ana@email.com"
+                                   autocomplete="email">
+                            <p th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"
+                               class="text-danger small mt-1"></p>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Lozinka</label>
+                            <input type="password" th:field="*{password}"
+                                   class="form-control" placeholder="Minimalno 6 znakova">
+                            <p th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}"
+                               class="text-danger small mt-1"></p>
+                        </div>
+
+                        <button type="submit" class="btn btn-blush w-100 py-2">
+                            Registriraj se besplatno
+                        </button>
+                    </form>
+
+                    <hr style="border-color: var(--rose-light); margin: 20px 0;">
+
+                    <p class="text-center mb-0 small text-muted">
+                        Već imate račun?
+                        <a th:href="@{/auth/login}"
+                           style="color: var(--rose); font-weight: 600;">Prijavite se</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

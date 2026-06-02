@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 admin-sidebar d-none d-md-block">
+            <p class="text-muted small fw-bold mt-2 mb-3 text-uppercase" style="letter-spacing:.05em;">Navigacija</p>
+            <a th:href="@{/admin}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            <a th:href="@{/admin/categories}"><i class="bi bi-tags me-2"></i> Kategorije</a>
+            <a th:href="@{/admin/products}" class="active"><i class="bi bi-box me-2"></i> Proizvodi</a>
+            <a th:href="@{/admin/orders}"><i class="bi bi-receipt me-2"></i> Narudžbe</a>
+            <a th:href="@{/admin/login-history}"><i class="bi bi-clock-history me-2"></i> Login povijest</a>
+        </div>
+
+        <div class="col-md-10 py-4 px-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title mb-0">Proizvodi</h2>
+                <a th:href="@{/admin/products/add}" class="btn btn-blush">
+                    <i class="bi bi-plus-lg me-1"></i> Novi proizvod
+                </a>
+            </div>
+
+            <div th:if="${success}" class="alert alert-blush alert-dismissible fade show">
+                <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <div class="card auth-card p-0 overflow-hidden">
+                <table class="table mb-0">
+                    <thead>
+                        <tr style="background: var(--rose-light);">
+                            <th class="ps-3 py-3">Slika</th>
+                            <th>Naziv</th>
+                            <th>Kategorija</th>
+                            <th>Cijena</th>
+                            <th>Zaliha</th>
+                            <th class="pe-3">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p : ${products.content}">
+                            <td class="ps-3">
+                                <img th:src="${p.imageUrl}"
+                                     style="width:42px;height:42px;object-fit:cover;border-radius:8px;" alt="">
+                            </td>
+                            <td class="fw-semibold" th:text="${p.name}">Naziv</td>
+                            <td>
+                                <span class="badge-blush" th:text="${p.categoryName}">Kat</span>
+                            </td>
+                            <td class="fw-bold" style="color: var(--rose-dark);"
+                                th:text="${#numbers.formatDecimal(p.price, 1, 2)} + ' €'">0</td>
+                            <td th:text="${p.stock}">0</td>
+                            <td class="pe-3">
+                                <a th:href="@{/admin/products/edit/{id}(id=${p.id})}"
+                                   class="btn btn-sm btn-blush-outline me-1">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form th:action="@{/admin/products/delete/{id}(id=${p.id})}"
+                                      method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm"
+                                            style="color: #c0392b;"
+                                            onclick="return confirm('Obrisati proizvod?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginacija -->
+            <nav th:if="${products.totalPages > 1}" class="mt-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${products.first} ? 'disabled'">
+                        <a class="page-link" th:href="@{/admin/products(page=${products.number - 1})}">‹</a>
+                    </li>
+                    <li class="page-item"
+                        th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+                        th:classappend="${i == products.number} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/admin/products(page=${i})}"
+                           th:text="${i + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${products.last} ? 'disabled'">
+                        <a class="page-link" th:href="@{/admin/products(page=${products.number + 1})}">›</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

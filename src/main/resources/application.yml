@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: webshop
+
+  datasource:
+    url: jdbc:h2:file:./data/webshopdb
+    driver-class-name: org.h2.Driver
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  thymeleaf:
+    cache: false
+
+  task:
+    execution:
+      pool:
+        core-size: 2
+        max-size: 5
+        queue-capacity: 100
+
+server:
+  port: ${PORT:8081}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:VeryLongSecretKeyForHS256AlgorithmMustBeAtLeast32CharactersLong2024WebShop}
+    access-token-expiration: 900000
+    refresh-token-expiration: 604800000
+
+paypal:
+  client-id: ${PAYPAL_CLIENT_ID:AXGA1deiYOpsaueZPumVZEQSsQ5BPi_6MzHC1Ve-Pmp6RF4HLfi4IVBMmS07oqegha_yR30ISwKHZoXK}
+  client-secret: ${PAYPAL_CLIENT_SECRET:EGx65mWzAkfBzzlHbTUfHKNwCKdGvcI5MoRDFNFJrT0zkHd5oonkm7Js6WpJS4odCv5GdY-_Vw2B03fO}
+  return-url: ${PAYPAL_RETURN_URL:http://localhost:8081/paypal/success}
+  cancel-url: ${PAYPAL_CANCEL_URL:http://localhost:8081/paypal/cancel}

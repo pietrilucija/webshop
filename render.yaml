@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: webshop
+    env: java
+    buildCommand: mvn clean package -DskipTests
+    startCommand: java -Dspring.profiles.active=render -jar target/webshop-0.0.1-SNAPSHOT.war
+    envVars:
+      - key: JWT_SECRET
+        sync: false
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: PAYPAL_RETURN_URL
+        sync: false
+      - key: PAYPAL_CANCEL_URL
+        sync: false

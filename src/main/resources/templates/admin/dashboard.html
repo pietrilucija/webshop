@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 admin-sidebar d-none d-md-block">
+            <p class="text-muted small fw-bold mt-2 mb-3 text-uppercase" style="letter-spacing:.05em;">Navigacija</p>
+            <a th:href="@{/admin}" class="active">
+                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            </a>
+            <a th:href="@{/admin/categories}">
+                <i class="bi bi-tags me-2"></i> Kategorije
+            </a>
+            <a th:href="@{/admin/products}">
+                <i class="bi bi-box me-2"></i> Proizvodi
+            </a>
+            <a th:href="@{/admin/orders}">
+                <i class="bi bi-receipt me-2"></i> Narudžbe
+            </a>
+            <a th:href="@{/admin/login-history}">
+                <i class="bi bi-clock-history me-2"></i> Login povijest
+            </a>
+        </div>
+
+        <!-- Sadržaj -->
+        <div class="col-md-10 py-4 px-4">
+            <h2 class="mb-4">Dashboard</h2>
+
+            <!-- Statistike -->
+            <div class="row mb-4">
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="bi bi-box"></i></div>
+                        <div class="stat-value" th:text="${totalProducts}">0</div>
+                        <div class="stat-label">Aktivnih proizvoda</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="bi bi-tags"></i></div>
+                        <div class="stat-value" th:text="${totalCategories}">0</div>
+                        <div class="stat-label">Kategorija</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="stat-card stat-card-pink">
+                        <div class="stat-icon"><i class="bi bi-receipt"></i></div>
+                        <div class="stat-value" th:text="${totalOrders}">0</div>
+                        <div class="stat-label">Ukupno narudžbi</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="bi bi-people"></i></div>
+                        <div class="stat-value" th:text="${totalUsers}">0</div>
+                        <div class="stat-label">Registriranih korisnika</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brze akcije -->
+            <h5 class="mb-3">Brze akcije</h5>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <a th:href="@{/admin/products/add}" class="quick-action-card d-block text-decoration-none">
+                        <i class="bi bi-plus-circle fs-4 d-block mb-2"></i>
+                        Novi proizvod
+                    </a>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <a th:href="@{/admin/categories/add}" class="quick-action-card d-block text-decoration-none">
+                        <i class="bi bi-folder-plus fs-4 d-block mb-2"></i>
+                        Nova kategorija
+                    </a>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <a th:href="@{/admin/orders}" class="quick-action-card d-block text-decoration-none">
+                        <i class="bi bi-list-check fs-4 d-block mb-2"></i>
+                        Sve narudžbe
+                    </a>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <a th:href="@{/admin/login-history}" class="quick-action-card d-block text-decoration-none">
+                        <i class="bi bi-shield-check fs-4 d-block mb-2"></i>
+                        Sigurnosni log
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

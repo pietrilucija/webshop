@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container">
+    <h2 class="mb-4">Plaćanje</h2>
+
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card auth-card p-3 mb-3">
+                <h5>Sadržaj narudžbe</h5>
+                <table class="table table-sm">
+                    <tr th:each="item : ${items}">
+                        <td th:text="${item.productName}">Naziv</td>
+                        <td th:text="${item.quantity} + 'x'">1x</td>
+                        <td class="text-end" th:text="${#numbers.formatDecimal(item.subtotal, 1, 2)} + ' €'">0 €</td>
+                    </tr>
+                </table>
+                <h5 class="text-end text-pink">Ukupno: <span th:text="${#numbers.formatDecimal(total, 1, 2)} + ' €'">0 €</span></h5>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card auth-card p-3">
+                <h5>Način plaćanja</h5>
+                <form th:action="@{/orders/checkout}" method="post">
+                    <div class="mb-3">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="paymentMethod"
+                                   value="CASH_ON_DELIVERY" id="cod" checked>
+                            <label class="form-check-label" for="cod">Gotovina - pouzeće</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod"
+                                   value="PAYPAL" id="paypal">
+                            <label class="form-check-label" for="paypal">
+                                PayPal
+                                <small class="text-muted d-block">Bit ćete preusmjereni na PayPal za plaćanje</small>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-blush w-100">Potvrdi narudžbu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

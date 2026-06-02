@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container py-4">
+    <h2 class="mb-4">Moje narudžbe</h2>
+
+    <div th:if="${success}" class="alert alert-blush alert-dismissible fade show">
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${orders.content.isEmpty()}" class="text-center py-5">
+        <i class="bi bi-receipt fs-1 text-muted d-block mb-3"></i>
+        <p class="text-muted">Nemate nijednu narudžbu.</p>
+        <a th:href="@{/products}" class="btn btn-blush">Pregledaj proizvode</a>
+    </div>
+
+    <div class="card auth-card mb-3 p-3" th:each="order : ${orders.content}">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+                <strong>Narudžba #<span th:text="${order.id}">1</span></strong>
+                <p class="small text-muted mb-0">
+                    <i class="bi bi-calendar3 me-1"></i>
+                    <span th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy. HH:mm')}">01.01.2025</span>
+                </p>
+            </div>
+            <div class="text-end">
+                <span class="order-status-badge"
+                      th:classappend="${order.status == 'PAID'} ? 'status-paid' :
+                                      (${order.status == 'SHIPPED'} ? 'status-shipped' :
+                                      (${order.status == 'CANCELLED'} ? 'status-cancelled' : 'status-pending'))"
+                      th:text="${order.status == 'PAID'} ? 'Plaćeno' :
+                               (${order.status == 'SHIPPED'} ? 'Isporučeno' :
+                               (${order.status == 'CANCELLED'} ? 'Otkazano' : 'Na čekanju'))">
+                </span>
+                <p class="small text-muted mb-0 mt-1">
+                    <i class="bi bi-credit-card me-1"></i>
+                    <span th:text="${order.paymentMethod == 'PAYPAL'} ? 'PayPal' : 'Gotovina - pouzeće'">
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <table class="table table-sm mb-2">
+            <thead>
+                <tr class="table-light">
+                    <th>Proizvod</th>
+                    <th class="text-center">Kom.</th>
+                    <th class="text-end">Cijena</th>
+                    <th class="text-end">Ukupno</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${order.items}">
+                    <td th:text="${item.productName}">Proizvod</td>
+                    <td class="text-center" th:text="${item.quantity}">1</td>
+                    <td class="text-end" th:text="${#numbers.formatDecimal(item.unitPrice, 1, 2)} + ' €'">0 €</td>
+                    <td class="text-end" th:text="${#numbers.formatDecimal(item.subtotal, 1, 2)} + ' €'">0 €</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-end mb-0">
+            <strong>Ukupno: <span class="text-pink"
+                th:text="${#numbers.formatDecimal(order.totalAmount, 1, 2)} + ' €'">0 €</span></strong>
+        </p>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

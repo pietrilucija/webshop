@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container">
+    <h2 class="mb-4">Košarica</h2>
+
+    <div th:if="${success}" class="alert alert-blush" th:text="${success}"></div>
+
+    <div th:if="${items == null || items.isEmpty()}">
+        <p class="text-muted">Vaša košarica je prazna.</p>
+        <a th:href="@{/products}" class="btn btn-blush">Pregledaj proizvode</a>
+    </div>
+
+    <div th:if="${items != null && !items.isEmpty()}">
+        <table class="table cart-table">
+            <thead>
+            <tr><th>Proizvod</th><th>Cijena</th><th>Količina</th><th>Ukupno</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img th:src="${item.imageUrl}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;" class="me-2" alt="">
+                        <span th:text="${item.productName}">Naziv</span>
+                    </div>
+                </td>
+                <td th:text="${#numbers.formatDecimal(item.price, 1, 2)} + ' €'">0 €</td>
+                <td>
+                    <form th:action="@{/cart/update}" method="post" class="d-inline">
+                        <input type="hidden" name="productId" th:value="${item.productId}">
+                        <input type="number" name="quantity" th:value="${item.quantity}" min="1"
+                               class="form-control qty-input d-inline" onchange="this.form.submit()">
+                    </form>
+                </td>
+                <td th:text="${#numbers.formatDecimal(item.subtotal, 1, 2)} + ' €'">0 €</td>
+                <td>
+                    <form th:action="@{/cart/remove}" method="post">
+                        <input type="hidden" name="productId" th:value="${item.productId}">
+                        <button type="submit" class="btn btn-sm text-danger"><i class="bi bi-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <form th:action="@{/cart/clear}" method="post">
+                <button type="submit" class="btn btn-blush-outline btn-sm">Isprazni košaricu</button>
+            </form>
+            <h4>Ukupno: <span class="text-pink" th:text="${#numbers.formatDecimal(total, 1, 2)} + ' €'">0 €</span></h4>
+        </div>
+
+        <div class="text-end mt-3">
+            <a th:href="@{/orders/checkout}" class="btn btn-blush btn-lg" sec:authorize="isAuthenticated()">
+                Nastavi na plaćanje →
+            </a>
+            <a th:href="@{/auth/login}" class="btn btn-blush btn-lg" sec:authorize="!isAuthenticated()">
+                Prijavite se za kupnju
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

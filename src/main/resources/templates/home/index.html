@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<div class="container py-4">
+
+    <!-- Flash poruke -->
+    <div th:if="${success}" class="alert alert-blush alert-dismissible fade show mb-3">
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-3">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero-section">
+        <span class="hero-eyebrow">✨ Nova kolekcija 2025</span>
+        <h1>Pronađi svoju <em>savršenu</em><br>rutinu ljepote</h1>
+        <p class="lead">Premium kozmetika i njega koja ističe tvoju prirodnu ljepotu.<br>
+            Brza dostava, povrat bez pitanja.</p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a th:href="@{/products}" class="btn btn-blush btn-lg">
+                Pregledaj kolekciju <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a th:href="@{/auth/register}" class="btn btn-blush-outline btn-lg"
+               sec:authorize="!isAuthenticated()">
+                Registriraj se besplatno
+            </a>
+        </div>
+    </div>
+
+    <!-- Kategorije -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="section-title mb-0">Kategorije</h3>
+        <a th:href="@{/products}" class="btn btn-blush-outline btn-sm">Sve →</a>
+    </div>
+    <div class="row mb-5">
+        <div class="col-6 col-md-3 mb-3"
+             th:each="cat, s : ${categories}">
+            <a th:href="@{/products(categoryId=${cat.id})}" class="category-card">
+                <div class="category-icon">
+                    <i th:class="${s.index % 4 == 0 ? 'bi bi-heart' :
+                                   s.index % 4 == 1 ? 'bi bi-stars' :
+                                   s.index % 4 == 2 ? 'bi bi-eye' : 'bi bi-droplet'}"></i>
+                </div>
+                <h6 class="fw-semibold mb-1" th:text="${cat.name}">Kategorija</h6>
+                <small class="text-muted" th:text="${cat.description}">Opis</small>
+            </a>
+        </div>
+        <div th:if="${#lists.isEmpty(categories)}" class="col-12">
+            <p class="text-muted">Još nema kategorija.</p>
+        </div>
+    </div>
+
+    <!-- Novi proizvodi -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="section-title mb-0">Novo u ponudi</h3>
+        <a th:href="@{/products}" class="btn btn-blush-outline btn-sm">Pogledaj sve →</a>
+    </div>
+    <div class="row">
+        <div class="col-6 col-md-3 mb-4"
+             th:each="product : ${products.content}">
+            <div class="card product-card h-100">
+                <div class="product-img-wrap">
+                    <img th:src="${product.imageUrl != null ? product.imageUrl :
+                                  'https://placehold.co/400x400/fce8ef/e8698a'}"
+                         class="card-img-top" alt="">
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <span class="product-category-tag" th:text="${product.categoryName}"></span>
+                    <h6 class="card-title" th:text="${product.name}">Naziv</h6>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="price"
+                              th:text="${#numbers.formatDecimal(product.price, 1, 2)} + ' €'">0 €</span>
+                        <div class="d-flex gap-1">
+                            <a th:href="@{/products/{id}(id=${product.id})}"
+                               class="btn btn-blush-outline btn-sm" title="Detalji">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <form th:action="@{/cart/add}" method="post">
+                                <input type="hidden" name="productId" th:value="${product.id}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-blush btn-sm"
+                                        title="Dodaj u košaricu">
+                                    <i class="bi bi-bag-plus"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${products.content.isEmpty()}" class="col-12 text-center py-5">
+            <i class="bi bi-bag fs-1 d-block mb-3" style="color: var(--rose-light);"></i>
+            <p class="text-muted">Trenutno nema proizvoda u ponudi.</p>
+        </div>
+    </div>
+
+    <!-- Promo banner -->
+    <div class="promo-banner mt-2 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h4 class="mb-1">🌸 Besplatna dostava za narudžbe iznad 40 €</h4>
+                <p class="mb-0 text-muted small">Plaćanje pouzeće ili PayPal. Povrat u roku 14 dana.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a th:href="@{/products}" class="btn btn-blush">Kupuj sada</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>
