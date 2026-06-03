@@ -1,33 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <footer th:fragment="footer" class="footer-blush mt-5">
-    <div class="container">
-        <div class="row py-3">
-            <div class="col-md-4 mb-3">
-                <p class="fw-bold mb-1" style="font-family: 'Playfair Display', serif; font-size: 1.1rem;">
-                    <i class="bi bi-heart-fill" style="color: #d4849f;"></i> Blush &amp; Glow
-                </p>
-                <p class="small text-muted mb-0">Vaš online dućan za kozmetiku i njegu.</p>
-            </div>
-            <div class="col-md-4 mb-3">
-                <p class="fw-bold small text-uppercase mb-2" style="letter-spacing:.05em;">Navigacija</p>
-                <ul class="list-unstyled small mb-0">
-                    <li><a th:href="@{/}" class="text-muted text-decoration-none footer-link">Početna</a></li>
-                    <li><a th:href="@{/products}" class="text-muted text-decoration-none footer-link">Proizvodi</a></li>
-                    <li><a th:href="@{/cart}" class="text-muted text-decoration-none footer-link">Košarica</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4 mb-3">
-                <p class="fw-bold small text-uppercase mb-2" style="letter-spacing:.05em;">Korisnički račun</p>
-                <ul class="list-unstyled small mb-0">
-                    <li><a th:href="@{/auth/login}" class="text-muted text-decoration-none footer-link">Prijava</a></li>
-                    <li><a th:href="@{/auth/register}" class="text-muted text-decoration-none footer-link">Registracija</a></li>
-                    <li><a th:href="@{/orders/history}" class="text-muted text-decoration-none footer-link">Moje narudžbe</a></li>
-                </ul>
-            </div>
-        </div>
-        <hr style="border-color: var(--pink-light);">
+    <div class="container py-3">
         <p class="text-center small text-muted mb-0">
+            <i class="bi bi-heart-fill" style="color: #d4849f;"></i>
             &copy; 2025 Blush &amp; Glow. Sva prava pridržana.
         </p>
     </div>
